@@ -22,7 +22,7 @@ def field_not_filled():
 
 def get_coords_for_player(player, xo):
     coords = input(f"{player}, введите через пробел координаты клетки, куда хотите поставить \"{xo}\": ").split(" ")
-    while len(coords) != 2 and not can_make_a_move(*[int(c) for c in coords]):
+    while len(coords) != 2 or not can_make_a_move(*[int(c) for c in coords]):
         if len(coords) != 2:
             coords = input("Количество координат должно быть равно двум. Пожалуйста, повторите ввод: ").split(" ")
         elif not can_make_a_move(*[int(c) for c in coords]):
@@ -42,7 +42,6 @@ def winner_move(xo, player):
     main_diag = all([field[i][i] == xo for i in range(len(field))])
     side_diag = all([field[i][len(field) - 1 - i] == xo for i in range(len(field))])
     return any_row or main_diag or side_diag or any_column
-
 
 
 def main():
