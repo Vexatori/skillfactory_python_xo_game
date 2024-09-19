@@ -33,7 +33,7 @@ def get_coords_for_player(player, xo):
     return i - 1, j - 1
 
 
-def winner_move(xo, player):
+def is_winner_move(xo, player):
     i, j = get_coords_for_player(player, xo)
     field[i][j] = xo
     print_field()
@@ -51,14 +51,16 @@ def main():
         player_1 = input("Пожалуйста, выберите, чем будет ходить первый игрок (x или o на английской раскладке): ")
     player_2 = 'x' if player_1 == 'o' else 'o'
     print_field()
-    while field_not_filled():
-        if winner_move(player_1, "Игрок 1"):
-            print("Игрок 1 победил!")
+    players = [(player_1, "Игрок 1"), (player_2, "Игрок 2")]
+    while True:
+        player = players[0]
+        if is_winner_move(*player):
+            print(f"{player[1]} победил!")
             have_a_winner = True
             break
-        if winner_move(player_2, "Игрок 2"):
-            print("Игрок 1 победил!")
-            have_a_winner = True
+        players.append(player)
+        players.pop(0)
+        if not field_not_filled():
             break
     if not field_not_filled() and not have_a_winner:
         print("Ничья!")
