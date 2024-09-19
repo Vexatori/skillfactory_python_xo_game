@@ -20,3 +20,14 @@ def field_not_filled():
     return any([('-' in row) for row in field])
 
 
+def get_coords_for_player(player, xo):
+    coords = input(f"{player}, введите через пробел координаты клетки, куда хотите поставить \"{xo}\": ").split(" ")
+    while len(coords) != 2 and not can_make_a_move(*[int(c) for c in coords]):
+        if len(coords) != 2:
+            coords = input("Количество координат должно быть равно двум. Пожалуйста, повторите ввод: ").split(" ")
+        elif not can_make_a_move(*[int(c) for c in coords]):
+            coords = input(
+                "Вы ввели неверные координаты, данная клетка не существует или заполнена, попробуйте еще раз: ").split(
+                " ")
+    i, j = [int(c) for c in coords]
+    return i - 1, j - 1
