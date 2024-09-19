@@ -42,3 +42,27 @@ def winner_move(xo, player):
     main_diag = all([field[i][i] == xo for i in range(len(field))])
     side_diag = all([field[i][len(field) - 1 - i] == xo for i in range(len(field))])
     return any_row or main_diag or side_diag or any_column
+
+
+
+def main():
+    have_a_winner = False
+    player_1 = ""
+    while player_1 not in ['x', 'o']:
+        player_1 = input("Пожалуйста, выберите, чем будет ходить первый игрок (x или o на английской раскладке): ")
+    player_2 = 'x' if player_1 == 'o' else 'o'
+    print_field()
+    while field_not_filled():
+        if winner_move(player_1, "Игрок 1"):
+            print("Игрок 1 победил!")
+            have_a_winner = True
+            break
+        if winner_move(player_2, "Игрок 2"):
+            print("Игрок 1 победил!")
+            have_a_winner = True
+            break
+    if not field_not_filled() and not have_a_winner:
+        print("Ничья!")
+
+
+main()
