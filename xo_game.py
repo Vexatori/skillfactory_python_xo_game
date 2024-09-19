@@ -31,3 +31,14 @@ def get_coords_for_player(player, xo):
                 " ")
     i, j = [int(c) for c in coords]
     return i - 1, j - 1
+
+
+def winner_move(xo, player):
+    i, j = get_coords_for_player(player, xo)
+    field[i][j] = xo
+    print_field()
+    any_row = any([all([elem == xo for elem in row]) for row in field])
+    any_column = any([all(elem == xo for elem in row) for row in [[field[i][j] for i in range(3)] for j in range(3)]])
+    main_diag = all([field[i][i] == xo for i in range(len(field))])
+    side_diag = all([field[i][len(field) - 1 - i] == xo for i in range(len(field))])
+    return any_row or main_diag or side_diag or any_column
